@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pl">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="user-scalable=no">
+		<meta name="keywords" content="SDQ.exe, wisielec, hangman">
+		<link rel="shortcut icon" href="favicon.ico">
+		<title>Wisielec</title>
+		<style>
+			#check-button, #end-button, #info-box-button-left, #info-box-button-right {
+				background-color:#ffccff;
+				border-color:#ffbbff;
+				border-radius:10px;
+				border-style:solid;
+				border-width:4px;
+				color:#ffeeff;
+				text-align:center}
+			#check-button:active, #end-button:active, #info-box-button-left:active, #info-box-button-right:active {
+				color:#ffffff;
+				background-color:#ffbbff;
+				border-color:#ffaaff}
+			#check-button {
+				font-size:30px;
+				height:82px;
+				width:160px}
+			#end-button {
+				bottom:10px;
+				font-size:20px;
+				height:50px;
+				position:absolute;
+				right:10px;
+				width:120px}
+			#info-box {
+				-moz-transform:scale(0);
+				-ms-transform:scale(0);
+				-o-transform:scale(0);
+				-webkit-transform:scale(0);
+				background-color:#ffddff;
+				border-color:#ffddff;
+				border-radius:20px;
+				border-style:solid;
+				display:none;
+				height:300px;
+				margin:15% auto;
+				position:relative;
+				text-align:center;
+				transform:scale(0);
+				vertical-align:center;
+				width:400px;
+				z-index:2}
+			#info-box-button-left, #info-box-button-right {
+				bottom:32px;
+				font-size:20px;
+				height:50px;
+				position:absolute;
+				width:180px}
+			#info-box-button-left {
+				left:8px}
+			#info-box-button-right {
+				right:8px}
+			#letter-space {
+				margin-top:40px}
+			#main-contener {
+				left:50%;
+				position:absolute;
+				text-align:center;
+				top:40%;
+				transform:translate(-50%,-50%)}
+			#overlay {
+  				background-color:rgba(0,0,0,0);
+  				bottom:0;
+				display:none;
+  				height:100%;
+  				left:0;
+				position:fixed;
+  				right:0;
+  				top:0;
+ 				width:100%;
+  				z-index:1}
+			#word-space {
+				margin-top:40px;
+				text-align:center}
+			* {
+				-moz-user-select:none;
+				-ms-user-select:none;
+				-webkit-user-select:none;
+				font-family:"comic sans ms";
+				user-select:none;
+				z-index:0}
+			.blue {
+				color:#0000ff}
+			.gray {
+				color:#808080}
+			.red {
+				color:#ff0000}
+			.green {
+				color:#00ff00}
+			body {
+				background-color:#ffddff}
+			img {
+				height:384px;
+				width:384px}
+			input {
+				background-color:#ffccff;
+				border-radius:10px;
+				border-style:none;
+				font-size:30px;
+				font-variant:small-caps;
+				font-weight:bolder;
+				height:72px;
+				text-align:center;
+				text-transform:uppercase;
+				transition-duration:0.4s;
+				width:72px}
+			input:focus, input:hover {
+				background-color:#ffbbff}
+			p {
+				text-align:center}
+			span {
+				font-size:40px;
+				font-variant:small-caps;
+				letter-spacing:5px}
+			@media screen and (max-width:1200px) {
+				}
+			@media screen and (max-width:800px) {
+				}
+		</style>
+	</head>
+	<body>
+		<div id="main-contener">
+			<p id="picture"></p>
+			<p id="word-space"></p>
+			<p id="letter-space">
+				<label>
+					<input id="letter" type="text" maxlength="1">
+				</label>
+				<button id="check-button" type="button">Sprawdź</button>
+			</p>
+		</div>
+		<button id="end-button" type="button">ZAKOŃCZ</button>
+		<div id="overlay"></div>
+		<div id="info-box">
+			<p id="win-message"><span class="blue">W</span><span class="red">Y</span><span class="green">G</span><span class="blue">R</span><span class="red">A</span><span class="green">N</span><span class="blue">A</span><span class="red">!!!</span><br></p>
+			<p id="lose-message"><span class="gray">PRZEGRANA</span><br></p>
+			<p id="end-message"><span class="gray">GRA PRZERWANA</span><br></p>
+			Słowo:
+			<p id="game-word"></p>
+			<button id="info-box-button-left" type="button">Zagraj ponownie</button>
+			<button id="info-box-button-right" type="button">Wyjdź z gry</button>
+		</div>
+		<script type="text/javascript">
+			/* Options */
+			const wordList = ["biedronka","dinozaur","drzewa","jabłko","jaszczurka","kamień","konstantynopolitańczykowianeczka","kosmos","kościół","kot","kwiatek","las","miasto","motyl","niebo","pies","polana","ryba","samochód","sklep","słońce","trawa","ulica","wiatr","woda"];
+			const fadeValues = {
+				iterationNumber: 15,
+				maxColor: 0.5,
+				min: 0,
+				maxScale: 1,
+				waitingTime: 10,
+				}
+			const loseValue = 10;
+			/* --- */
+			var letterValue, word, usedLetters = [];
+			var score = {
+				positive: 0,
+				negative: 0
+				};
+			exitGame = () => {
+				window.location = "http://sqdexe.github.io/";
+				}
+			showImage = (imageNumber) => {	
+				for (let i = 0; i <= loseValue; i++) document.getElementById(`img-${i}`).style.display = "none";
+				document.getElementById(`img-${imageNumber}`).style.display = "block";
+				}
+			cleanUp = () => {
+				score.positive = 0, score.negative = 0;
+				usedLetters.length = 0;
+				showImage(0);
+				document.getElementById("word-space").innerHTML = "";
+				}
+			setUp = () => {
+				word = wordList[Math.floor(Math.random() * wordList.length)].split("");
+				let wordOutput = document.getElementById("word-space");
+				for (let i = 0; i < word.length; i++) {
+					let span = document.createElement("span");
+					wordOutput.appendChild(span);
+					span.className = word[i];
+					span.innerText = "_";
+					}
+				}
+			showElements = (styleValue) => {
+				let infoBox = document.getElementById("info-box");
+				let overlay = document.getElementById("overlay");
+				if (styleValue == "in") {
+					let scaleValue = fadeValues.min, colorValue = fadeValues.min;
+					for (let i = 0; i < fadeValues.iterationNumber; i++) setTimeout(function() {
+						if (i == 0) {
+							overlay.style.display = "block";
+							infoBox.style.display = "block";
+							}
+						scaleValue += fadeValues.maxScale / fadeValues.iterationNumber;
+						colorValue += fadeValues.maxColor / fadeValues.iterationNumber;
+						infoBox.style.transform = `scale(${scaleValue})`;
+						overlay.style.backgroundColor = `rgba(0,0,0,${colorValue})`; 
+						}, fadeValues.waitingTime * (1 + i));
+					}
+				else {
+					let scaleValue = fadeValues.maxScale, colorValue = fadeValues.maxColor;
+					for (let i = 0; i < fadeValues.iterationNumber; i++) setTimeout(function() {
+						scaleValue -= fadeValues.maxScale / fadeValues.iterationNumber;
+						colorValue -= fadeValues.maxColor / fadeValues.iterationNumber;
+						infoBox.style.transform = `scale(${scaleValue})`;
+						overlay.style.backgroundColor = `rgba(0,0,0,${colorValue})`; 
+						if (i == fadeValues.iterationNumber - 1) {
+							overlay.style.display = "none";
+							infoBox.style.dispaly = "none";
+							}
+						}, fadeValues.waitingTime * (1 + i));
+					}
+				}
+			visStyle = (bool) => (bool) ? "block" : "none";
+			showEndMessage = (winStyle, loseStyle, breakStyle) => {
+				document.getElementById("win-message").style.display = visStyle(winStyle);
+				document.getElementById("lose-message").style.display = visStyle(loseStyle);
+				document.getElementById("end-message").style.display = visStyle(breakStyle);
+				}
+			endGame = (endType) => {
+				showElements("in");
+				document.getElementById("game-word").innerText = word.join("");
+				if (endType == "win") showEndMessage(true, false, false);
+				else if (endType == "lose") showEndMessage(false, true, false);
+				else showEndMessage(false, false, true);
+				}
+			check = () => {
+				letterValue = document.getElementById("letter").value.toLowerCase();
+				if (letterValue.length == 0) return;
+				for (let i = 0; i < usedLetters.length; i++) if (letterValue == usedLetters[i]) return;
+				usedLetters.push(letterValue);
+				document.getElementById("letter").value = "";
+				let lengthCheck = 0;
+				for (let i = 0; i < word.length; i++) if (word[i] != letterValue) lengthCheck++;
+				if (lengthCheck == word.length) {
+					score.negative++;
+					showImage(score.negative);
+					if (loseValue <= score.negative) endGame("lose");
+					}
+				else {
+					let matchingPlaces = document.getElementsByClassName(letterValue);
+					for (let i = 0; i < matchingPlaces.length; i++) {
+						matchingPlaces[i].textContent = letterValue;
+						score.positive++;
+						}
+					if (word.length <= score.positive) endGame("win");
+					}
+				}
+			loadImages = () => {
+				let imageSpace = document.getElementById("picture");
+				for (let i = 0; i <= loseValue; i++) {
+					let img = document.createElement("img");
+					imageSpace.appendChild(img);
+					img.src = `content/${i}.png`;
+					img.alt = "Wisielec";
+					img.id = `img-${i}`;
+					img.style.display = "none";
+					}
+				}
+			assignButtons = () => {
+				document.getElementById("letter").addEventListener("keydown", () => {
+					if (event.keyCode === 13) check();
+					});
+				document.getElementById("check-button").addEventListener("click", check);
+				document.getElementById("end-button").addEventListener("click", endGame, "break");
+				document.getElementById("info-box-button-left").addEventListener("click", () => {
+					cleanUp();
+					setUp();
+					showElements("out");
+					});
+				document.getElementById("info-box-button-right").addEventListener("click", exitGame);
+				}
+			loadGame = () => {
+				loadImages();
+				assignButtons();
+				cleanUp();
+				setUp();
+				}
+			window.addEventListener("load", () => {
+				loadGame();
+                for (let elem of Array.from(document.getElementsByTagName("script"))) elem.remove();
+                });
+		</script>
+	</body>
+</html>
