@@ -21,7 +21,7 @@ const elements = Object.freeze({
     img: []
     });
 /* --- */
-exitGame = () => {
+exit = () => {
     window.location = "http://sqdexe.github.io/";
     }
 showImage = imageNumber => {	
@@ -30,7 +30,7 @@ showImage = imageNumber => {
     }
 cleanUp = () => {
     variables.positive = 0, variables.negative = 0;
-    variables.usedLetters.length = 0;
+    variables.usedLetters = [];
     showImage(0);
     elements.wordOutput.innerHTML = "";
     }
@@ -38,9 +38,9 @@ setUp = () => {
     variables.word = variables.wordList[Math.floor(Math.random() * variables.wordList.length)].split("");
     for (let i = 0; i < variables.word.length; i++) {
         let span = document.createElement("span");
-        elements.wordOutput.appendChild(span);
-        span.className = variables.word[i];
+        span.className = variables.word.at(i);
         span.innerText = "_";
+        elements.wordOutput.appendChild(span);
         }
     }
 showElements = styleValue => {
@@ -83,7 +83,7 @@ check = () => {
     variables.usedLetters.push(variables.letterValue);
     elements.letter.value = "";
     let lengthCheck = 0;
-    for (let i = 0; i < variables.word.length; i++) if (variables.word[i] != variables.letterValue) lengthCheck++;
+    for (let i = 0; i < variables.word.length; i++) if (variables.word.at(i) != variables.letterValue) lengthCheck++;
     if (lengthCheck == variables.word.length) {
         variables.negative++;
         showImage(variables.negative);
@@ -123,12 +123,12 @@ assignButtons = () => {
         setUp();
         showElements(false);
         });
-    document.getElementById("info-box-button-right").addEventListener("click", exitGame);
+    document.getElementById("info-box-button-right").addEventListener("click", exit);
     }
-loadGame = () => {
+load = () => {
     loadImages();
     assignButtons();
     cleanUp();
     setUp();
     }
-window.addEventListener("load", loadGame /*for (let elem of Array.from(document.getElementsByTagName("script"))) elem.remove();*/);
+window.addEventListener("load", load /*for (let elem of Array.from(document.getElementsByTagName("script"))) elem.remove();*/);
