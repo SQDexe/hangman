@@ -11,7 +11,7 @@ const variables = Object.seal({
     });
 const elements = Object.freeze({
     wordOutput: document.getElementById("word-space"),
-    gameWord: document.getElementById("game-word"),
+    gameWord: document.getElementById("game-word").getElementsByTagName("span")[0],
     letter: document.getElementById("letter"),
     win: document.getElementById("win-message"),
     lose: document.getElementById("lose-message"),
@@ -103,7 +103,7 @@ loadImages = () => {
     for (let i = 0; i <= variables.loseValue; i++) {
         let img = document.createElement("img");
         imageSpace.appendChild(img);
-        img.src = `content/${i}.png`;
+        img.src = `img/${i}.png`;
         img.alt = `Wisielec ${i} stopień`;
         img.id = `img-${i}`;
         img.classList.add("hidden");

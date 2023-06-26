@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 10 versions
+*/
+
 :root {
     --animation-time: 0.25s;
     --primary-color: #ffccff;
@@ -6,43 +13,59 @@
     --background-color: #ffddff;
     --writing-color: #ffffff;
     }
-@keyframes abi {
+@-webkit-keyframes abi {
     from {
-        transform: scale(0);
-        -o-transform: scale(0);
-        -ms-transform: scale(0);
-        -moz-transform: scale(0);
-        -webkit-transform: scale(0);
+        transform: translate(-50%, -50%) scale(0);
+        -webkit-transform: translate(-50%, -50%) scale(0);
         }
     to {
-        transform: scale(1);
-        -o-transform: scale(1);
-        -ms-transform: scale(1);
-        -moz-transform: scale(1);
-        -webkit-transform: scale(1);
+        transform: translate(-50%, -50%) scale(1);
+        -webkit-transform: translate(-50%, -50%) scale(1);
+        }
+    }
+@keyframes abi {
+    from {
+        transform: translate(-50%, -50%) scale(0);
+        -webkit-transform: translate(-50%, -50%) scale(0);
+        }
+    to {
+        transform: translate(-50%, -50%) scale(1);
+        -webkit-transform: translate(-50%, -50%) scale(1);
+        }
+    }
+@-webkit-keyframes abo {
+    from {
+        transform: translate(-50%, -50%) scale(1);
+        -webkit-transform: translate(-50%, -50%) scale(1);
+        }
+    to {
+        transform: translate(-50%, -50%) scale(0);
+        -webkit-transform: translate(-50%, -50%) scale(0);
         }
     }
 @keyframes abo {
     from {
-        transform: scale(1);
-        -o-transform: scale(1);
-        -ms-transform: scale(1);
-        -moz-transform: scale(1);
-        -webkit-transform: scale(1);
+        transform: translate(-50%, -50%) scale(1);
+        -webkit-transform: translate(-50%, -50%) scale(1);
         }
     to {
-        transform: scale(0);
-        -o-transform: scale(0);
-        -ms-transform: scale(0);
-        -moz-transform: scale(0);
-        -webkit-transform: scale(0);
+        transform: translate(-50%, -50%) scale(0);
+        -webkit-transform: translate(-50%, -50%) scale(0);
         }
     }
 @keyframes aoi {
     from { background-color: rgba(0,0,0,0); }
     to { background-color: rgba(0,0,0,0.5); }
+}
+@-webkit-keyframes aoi {
+    from { background-color: rgba(0,0,0,0); }
+    to { background-color: rgba(0,0,0,0.5); }
     }
 @keyframes aoo {
+    from { background-color: rgba(0,0,0,0.5); }
+    to { background-color: rgba(0,0,0,0); }
+}
+@-webkit-keyframes aoo {
     from { background-color: rgba(0,0,0,0.5); }
     to { background-color: rgba(0,0,0,0); }
     }
@@ -72,38 +95,56 @@
     width: 120px;
     font-size: 20px;
     }
+#game-word { font-size: 24px; }
 #info-box {
-    position: relative;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    -ms-transform: translate(-50%, -50%) scale(0);
+    -webkit-transform: translate(-50%, -50%) scale(0);
     z-index: 2;
     height: 300px;
     width: 400px;
     border: 20px solid var(--background-color);
     border-radius: 20px;
-    margin: 15% auto;
-    transform: scale(0);
-    -o-transform: scale(0);
-    -ms-transform: scale(0);
-    -moz-transform: scale(0);
-    -webkit-transform: scale(0);
     background-color: var(--background-color);
     text-align: center;
     vertical-align: center;
     }
 #info-box-button-left, #info-box-button-right {
     position: absolute;
-    bottom: 32px;
+    bottom: 16px;
     height: 50px;
     width: 180px;
     font-size: 20px;
     }
 #info-box-button-left { left: 8px; }
 #info-box-button-right { right: 8px; }
+#letter {
+    height: 72px;
+    width: 72px;
+    border-style: none;
+    border-radius: 10px;
+    background-color: var(--primary-color);
+    font-size: 30px;
+    font-weight: bolder;
+    font-variant: small-caps;
+    text-align: center;
+    text-transform: uppercase;
+    transition-duration: 0.4s;
+    -o-transition-duration: 0.4s;
+    -webkit-transition-duration: 0.4s;
+    }
+#letter:focus, #letter:hover { background-color: var(--secondary-color); }
 #letter-space { margin-top: 40px; }
 #main-contener {
     position: absolute;
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
     text-align: center;
     }
 #overlay {
@@ -121,15 +162,37 @@
     margin-top: 40px;
     text-align: center;
     }
-.blue { color: #0000ff; }
-.gray { color: #808080; }
-.red { color: #ff0000; }
-.green { color: #00ff00; }
+#word-space>span {
+    font-size: 40px;
+    font-variant: small-caps;
+    letter-spacing: 5px;
+    }
+#win-message, #lose-message, #end-message { font-size: 40px; }
+#win-message>span:nth-of-type(3n+0) { color: #0000ff; }
+#win-message>span:nth-of-type(3n+1) { color: #ff0000; }
+#win-message>span:nth-of-type(3n+2) { color: #00ff00; }
+#lose-message, #end-message { color: #808080; }
 .hidden { display: none; }
-.anima-box-in { animation: abi var(--animation-time) ease-out 0s 1 normal forwards; }
-.anima-box-out { animation: abo var(--animation-time) ease-in 0s 1 normal forwards; }
-.anima-overlay-in { animation: aoi var(--animation-time) linear 0s 1 normal forwards; }
-.anima-overlay-out { animation: aoo var(--animation-time) linear 0s 1 normal forwards; }
+.anima-box-in {
+    animation: abi var(--animation-time) ease-out 0s 1 normal forwards; 
+    -ms-animation: abi var(--animation-time) ease-out 0s 1 normal forwards;
+    -webkit-animation: abi var(--animation-time) ease-out 0s 1 normal forwards;
+    }
+.anima-box-out {
+    animation: abo var(--animation-time) ease-in 0s 1 normal forwards; 
+    -ms-animation: abo var(--animation-time) ease-in 0s 1 normal forwards;
+    -webkit-animation: abo var(--animation-time) ease-in 0s 1 normal forwards;
+    }
+.anima-overlay-in {
+    animation: aoi var(--animation-time) linear 0s 1 normal forwards; 
+    -ms-animation: aoi var(--animation-time) linear 0s 1 normal forwards;
+    -webkit-animation: aoi var(--animation-time) linear 0s 1 normal forwards;
+    }
+.anima-overlay-out {
+    animation: aoo var(--animation-time) linear 0s 1 normal forwards; 
+    -ms-animation: aoo var(--animation-time) linear 0s 1 normal forwards;
+    -webkit-animation: aoo var(--animation-time) linear 0s 1 normal forwards;
+    }
 * {
     z-index: 0;
     font-family: "comic sans ms";
@@ -144,25 +207,50 @@ img {
     height: 384px;
     width: 384px;
     }
-input {
-    height: 72px;
-    width: 72px;
-    border-style: none;
-    border-radius: 10px;
-    background-color: var(--primary-color);
-    font-size: 30px;
-    font-weight: bolder;
-    font-variant: small-caps;
-    text-align: center;
-    text-transform: uppercase;
-    transition-duration: 0.4s;
-    }
-input:focus, input:hover { background-color: var(--secondary-color); }
 p { text-align: center; }
-span {
-    font-size: 40px;
-    font-variant: small-caps;
-    letter-spacing: 5px;
-}
+
 @media screen and (max-width: 800px) {
+    #check-button {
+        height: 41px;
+        width: 80px;
+        font-size: 15px;
+        }
+    #end-button {
+        height: 40px;
+        width: 90px;
+        font-size: 15px;
+        }    
+    #game-word { font-size: 16px; }
+    #info-box {
+        height: 225px;
+        width: 260px;
+        }
+    #info-box-button-left, #info-box-button-right {
+        position: absolute;
+        bottom: 8px;
+        height: 40px;
+        width: 140px;
+        font-size: 15px;
+        }
+    #info-box-button-left { left: -12px; }
+    #info-box-button-right { right: -12px; }
+    #letter {
+        height: 36px;
+        width: 36px;
+        border-radius: 10px;
+        font-size: 15px;
+        }
+    #letter-space { margin-top: 30px; }
+    #win-message, #lose-message, #end-message { font-size: 25px; }
+    #word-space { margin-top: 30px; }
+    #word-space>span {
+        font-size: 20px;
+        font-variant: small-caps;
+        letter-spacing: 2px;
+        }    
+    img {
+        display: block;
+        height: 288px;
+        width: 288px;
+        }
     }
