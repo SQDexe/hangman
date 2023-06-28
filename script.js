@@ -21,9 +21,7 @@ const elements = Object.freeze({
     img: []
     });
 /* --- */
-exit = () => {
-    window.location = "http://sqdexe.github.io/";
-    }
+exit = () => window.location = "sqdexe.github.io";
 showImage = imageNumber => {	
     for (let i = 0; i <= variables.loseValue; i++) elements.img[i].classList.add("hidden");
     elements.img[imageNumber].classList.remove("hidden");
