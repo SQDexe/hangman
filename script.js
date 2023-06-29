@@ -121,9 +121,9 @@ loadImages = () => {
     }
 colorText = () => {
     let text = "";
-    for (let letter of variables.win.innerText)
+    for (let letter of elements.win.innerText)
         text += "<span>" + letter + "</span>";
-    variables.win.innerHTML = text;
+    elements.win.innerHTML = text;
     }
 assignButtons = () => {
     document.getElementById("letter").addEventListener("keydown", Event => {
