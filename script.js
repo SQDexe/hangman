@@ -21,9 +21,10 @@ const elements = Object.freeze({
     img: []
     });
 /* --- */
-exit = () => window.location = "sqdexe.github.io";
+exit = () => window.location = "https://sqdexe.github.io";
 showImage = imageNumber => {	
-    for (let i = 0; i <= variables.loseValue; i++) elements.img[i].classList.add("hidden");
+    for (let i = 0; i <= variables.loseValue; i++)
+        elements.img[i].classList.add("hidden");
     elements.img[imageNumber].classList.remove("hidden");
     }
 cleanUp = () => {
@@ -34,8 +35,8 @@ cleanUp = () => {
     }
 setUp = () => {
     variables.word = variables.wordList[Math.floor(Math.random() * variables.wordList.length)].split("");
-    for (let i = 0; i < variables.word.length; i++) {
-        let span = document.createElement("span");
+    for (let i = 0, span = null; i < variables.word.length; i++) {
+        span = document.createElement("span");
         span.className = variables.word.at(i);
         span.innerText = "_";
         elements.wordOutput.appendChild(span);
@@ -69,23 +70,32 @@ showEndMessage = (win, lose, end) => {
     }
 endGame = endType => {
     elements.gameWord.innerText = variables.word.join("");
-    if (endType == "win") showEndMessage(true, false, false);
-    else if (endType == "lose") showEndMessage(false, true, false);
-    else showEndMessage(false, false, true);
+    if (endType == "win")
+        showEndMessage(true, false, false);
+    else if (endType == "lose")
+        showEndMessage(false, true, false);
+    else
+        showEndMessage(false, false, true);
     showElements(true);
     }
 check = () => {
     variables.letterValue = elements.letter.value.toLowerCase();
-    if (variables.letterValue.length == 0) return;
-    for (let i = 0; i < variables.usedLetters.length; i++) if (variables.letterValue == variables.usedLetters[i]) return;
+    if (variables.letterValue.length == 0)
+        return;
+    for (let i = 0; i < variables.usedLetters.length; i++)
+        if (variables.letterValue == variables.usedLetters[i])
+            return;
     variables.usedLetters.push(variables.letterValue);
     elements.letter.value = "";
     let lengthCheck = 0;
-    for (let i = 0; i < variables.word.length; i++) if (variables.word.at(i) != variables.letterValue) lengthCheck++;
+    for (let i = 0; i < variables.word.length; i++)
+        if (variables.word.at(i) != variables.letterValue)
+            lengthCheck++;
     if (lengthCheck == variables.word.length) {
         variables.negative++;
         showImage(variables.negative);
-        if (variables.loseValue <= variables.negative) endGame("lose");
+        if (variables.loseValue <= variables.negative)
+            endGame("lose");
         }
     else {
         let matchingPlaces = document.getElementsByClassName(variables.letterValue);
@@ -93,13 +103,14 @@ check = () => {
             matchingPlaces[i].textContent = variables.letterValue;
             variables.positive++;
             }
-        if (variables.word.length <= variables.positive) endGame("win");
+        if (variables.word.length <= variables.positive)
+            endGame("win");
         }
     }
 loadImages = () => {
     let imageSpace = document.getElementById("picture");
-    for (let i = 0; i <= variables.loseValue; i++) {
-        let img = document.createElement("img");
+    for (let i = 0, img = null; i <= variables.loseValue; i++) {
+        img = document.createElement("img");
         imageSpace.appendChild(img);
         img.src = `img/${i}.png`;
         img.alt = `Wisielec ${i} stopień`;
@@ -108,9 +119,16 @@ loadImages = () => {
         elements.img.push(img);
         }
     }
+colorText = () => {
+    let text = "";
+    for (let letter of variables.win.innerText)
+        text += "<span>" + letter + "</span>";
+    variables.win.innerHTML = text;
+    }
 assignButtons = () => {
     document.getElementById("letter").addEventListener("keydown", Event => {
-        if (Event.key == "Enter") check();
+        if (Event.key == "Enter")
+            check();
         });
     document.getElementById("check-button").addEventListener("click", check);
     document.getElementById("end-button").addEventListener("click", () => {
@@ -125,6 +143,7 @@ assignButtons = () => {
     }
 load = () => {
     loadImages();
+    colorText();
     assignButtons();
     cleanUp();
     setUp();

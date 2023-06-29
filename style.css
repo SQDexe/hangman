@@ -13,6 +13,7 @@
     --background-color: #ffddff;
     --writing-color: #ffffff;
     }
+
 @-webkit-keyframes abi {
     from {
         transform: translate(-50%, -50%) scale(0);
@@ -70,14 +71,20 @@
     to { background-color: rgba(0,0,0,0); }
     }
 
-#check-button, #end-button, #info-box-button-left, #info-box-button-right {
+#check-button,
+#end-button,
+#info-box-button-left,
+#info-box-button-right {
     border: 4px solid var(--secondary-color);
     border-radius: 10px;
     color: var(--writing-color);
     background-color: var(--primary-color);
     text-align: center;
     }
-#check-button:active, #end-button:active, #info-box-button-left:active, #info-box-button-right:active {
+#check-button:active,
+#end-button:active,
+#info-box-button-left:active,
+#info-box-button-right:active {
     border-color: var(--additional-color);
     color: var(--writing-color);
     background-color: var(--secondary-color);
@@ -112,7 +119,8 @@
     text-align: center;
     vertical-align: center;
     }
-#info-box-button-left, #info-box-button-right {
+#info-box-button-left,
+#info-box-button-right {
     position: absolute;
     bottom: 16px;
     height: 50px;
@@ -136,7 +144,8 @@
     -o-transition-duration: 0.4s;
     -webkit-transition-duration: 0.4s;
     }
-#letter:focus, #letter:hover { background-color: var(--secondary-color); }
+#letter:focus,
+#letter:hover { background-color: var(--secondary-color); }
 #letter-space { margin-top: 40px; }
 #main-contener {
     position: absolute;
@@ -167,7 +176,9 @@
     font-variant: small-caps;
     letter-spacing: 5px;
     }
-#win-message, #lose-message, #end-message { font-size: 40px; }
+#win-message,
+#lose-message,
+#end-message { font-size: 40px; }
 #win-message>span:nth-of-type(3n+0) { color: #0000ff; }
 #win-message>span:nth-of-type(3n+1) { color: #ff0000; }
 #win-message>span:nth-of-type(3n+2) { color: #00ff00; }
@@ -225,7 +236,8 @@ p { text-align: center; }
         height: 225px;
         width: 260px;
         }
-    #info-box-button-left, #info-box-button-right {
+    #info-box-button-left,
+    #info-box-button-right {
         position: absolute;
         bottom: 8px;
         height: 40px;
@@ -241,7 +253,9 @@ p { text-align: center; }
         font-size: 15px;
         }
     #letter-space { margin-top: 30px; }
-    #win-message, #lose-message, #end-message { font-size: 25px; }
+    #win-message,
+    #lose-message,
+    #end-message { font-size: 25px; }
     #word-space { margin-top: 30px; }
     #word-space>span {
         font-size: 20px;
