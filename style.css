@@ -13,17 +13,7 @@
     --background-color: #ffddff;
     --writing-color: #ffffff;
     }
-
-@-webkit-keyframes abi {
-    from {
-        transform: translate(-50%, -50%) scale(0);
-        -webkit-transform: translate(-50%, -50%) scale(0);
-        }
-    to {
-        transform: translate(-50%, -50%) scale(1);
-        -webkit-transform: translate(-50%, -50%) scale(1);
-        }
-    }
+    
 @keyframes abi {
     from {
         transform: translate(-50%, -50%) scale(0);
@@ -34,7 +24,17 @@
         -webkit-transform: translate(-50%, -50%) scale(1);
         }
     }
-@-webkit-keyframes abo {
+@-webkit-keyframes abi {
+    from {
+        transform: translate(-50%, -50%) scale(0);
+        -webkit-transform: translate(-50%, -50%) scale(0);
+        }
+    to {
+        transform: translate(-50%, -50%) scale(1);
+        -webkit-transform: translate(-50%, -50%) scale(1);
+        }
+    }
+@keyframes abo {
     from {
         transform: translate(-50%, -50%) scale(1);
         -webkit-transform: translate(-50%, -50%) scale(1);
@@ -44,7 +44,7 @@
         -webkit-transform: translate(-50%, -50%) scale(0);
         }
     }
-@keyframes abo {
+@-webkit-keyframes abo {
     from {
         transform: translate(-50%, -50%) scale(1);
         -webkit-transform: translate(-50%, -50%) scale(1);

@@ -1,5 +1,4 @@
-
-/* Options */
+/* Variables for the game */
 const variables = Object.seal({
     loseValue: 10,
     wordList: ["biedronka","dinozaur","drzewa","jabłko","jaszczurka","kamień","konstantynopolitańczykowianeczka","kosmos","kościół","kot","kwiatek","las","miasto","motyl","niebo","pies","polana","ryba","samochód","sklep","słońce","trawa","ulica","wiatr","woda"],
@@ -7,8 +6,10 @@ const variables = Object.seal({
     letterValue: "",
     usedLetters: [],
     positive: 0,
-    negative: 0
+    negative: 0,
+    animationTime: Number.parseFloat(getComputedStyle(document.querySelector(":root")).getPropertyValue("--animation-time")) * 1000
     });
+/* Quick element access */
 const elements = Object.freeze({
     wordOutput: document.getElementById("word-space"),
     gameWord: document.getElementById("game-word").getElementsByTagName("span")[0],
@@ -20,20 +21,22 @@ const elements = Object.freeze({
     overlay: document.getElementById("overlay"),
     img: []
     });
-/* --- */
-exit = () => window.location = "https://sqdexe.github.io";
-showImage = imageNumber => {	
-    for (let i = 0; i <= variables.loseValue; i++)
-        elements.img[i].classList.add("hidden");
+const exit = () => window.location = "https://sqdexe.github.io";
+const showImage = imageNumber => {
+    /* Hides all images and shows current one */
+    for (let img of elements.img)
+        img.classList.add("hidden");
     elements.img[imageNumber].classList.remove("hidden");
     }
-cleanUp = () => {
+const cleanUp = () => {
+    /* Clears variables and elements */
     variables.positive = 0, variables.negative = 0;
     variables.usedLetters = [];
     showImage(0);
     elements.wordOutput.innerHTML = "";
     }
-setUp = () => {
+const setUp = () => {
+    /* Chooses word and preperes elements */
     variables.word = variables.wordList[Math.floor(Math.random() * variables.wordList.length)].split("");
     for (let i = 0, span = null; i < variables.word.length; i++) {
         span = document.createElement("span");
@@ -42,7 +45,8 @@ setUp = () => {
         elements.wordOutput.appendChild(span);
         }
     }
-showElements = styleValue => {
+const showElements = styleValue => {
+    /* Shows and hides overlay and info box */
     if (styleValue) {
         elements.infoBox.classList.remove("hidden");
         elements.overlay.classList.remove("hidden");
@@ -59,16 +63,18 @@ showElements = styleValue => {
         setTimeout(() => {
             elements.infoBox.classList.add("hidden");
             elements.overlay.classList.add("hidden");
-            }, Number.parseFloat(getComputedStyle(document.querySelector(":root")).getPropertyValue("--animation-time")) * 1000);
+            }, variables.animationTime);
         }
     }
-visStyle = (bool, elem) => bool ? elements[elem].classList.remove("hidden") : elements[elem].classList.add("hidden");
-showEndMessage = (win, lose, end) => {
+const visStyle = (bool, elem) => bool ? elements[elem].classList.remove("hidden") : elements[elem].classList.add("hidden");
+const showEndMessage = (win, lose, end) => {
+    /* Manages info box */
     visStyle(win, "win");
     visStyle(lose, "lose");
     visStyle(end, "end");
     }
-endGame = endType => {
+const endGame = endType => {
+    /* Ends the game */
     elements.gameWord.innerText = variables.word.join("");
     if (endType == "win")
         showEndMessage(true, false, false);
@@ -78,25 +84,32 @@ endGame = endType => {
         showEndMessage(false, false, true);
     showElements(true);
     }
-check = () => {
+const check = () => {
+    /* Gets letter and checks if correct */
     variables.letterValue = elements.letter.value.toLowerCase();
     if (variables.letterValue.length == 0)
         return;
     for (let i = 0; i < variables.usedLetters.length; i++)
         if (variables.letterValue == variables.usedLetters[i])
             return;
+    
+    /* Stacks letter, clears input and tests the letter */
     variables.usedLetters.push(variables.letterValue);
     elements.letter.value = "";
     let lengthCheck = 0;
     for (let i = 0; i < variables.word.length; i++)
         if (variables.word.at(i) != variables.letterValue)
             lengthCheck++;
+
+    /* Negative result */
     if (lengthCheck == variables.word.length) {
         variables.negative++;
         showImage(variables.negative);
         if (variables.loseValue <= variables.negative)
             endGame("lose");
         }
+        
+    /* Positive result */
     else {
         let matchingPlaces = document.getElementsByClassName(variables.letterValue);
         for (let i = 0; i < matchingPlaces.length; i++) {
@@ -107,7 +120,8 @@ check = () => {
             endGame("win");
         }
     }
-loadImages = () => {
+const loadImages = () => {
+    /* Loads and prepares images */
     let imageSpace = document.getElementById("picture");
     for (let i = 0, img = null; i <= variables.loseValue; i++) {
         img = document.createElement("img");
@@ -119,13 +133,15 @@ loadImages = () => {
         elements.img.push(img);
         }
     }
-colorText = () => {
+const colorText = () => {
+    /* Colors the text */
     let text = "";
     for (let letter of elements.win.innerText)
         text += "<span>" + letter + "</span>";
     elements.win.innerHTML = text;
     }
-assignButtons = () => {
+const assignButtons = () => {
+    /* Assigns the buttons */
     document.getElementById("letter").addEventListener("keydown", Event => {
         if (Event.key == "Enter")
             check();
@@ -141,11 +157,12 @@ assignButtons = () => {
         });
     document.getElementById("info-box-button-right").addEventListener("click", exit);
     }
-load = () => {
+const load = () => {
     loadImages();
     colorText();
     assignButtons();
     cleanUp();
     setUp();
     }
-window.addEventListener("load", load /*for (let elem of Array.from(document.getElementsByTagName("script"))) elem.remove();*/);
+/* for (let elem of Array.from(document.getElementsByTagName("script"))) elem.remove(); */
+window.addEventListener("load", load);
