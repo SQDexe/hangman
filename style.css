@@ -206,7 +206,7 @@
     }
 * {
     z-index: 0;
-    font-family: "comic sans ms";
+    font-family: 'Comic Sans MS', Tahoma, Verdana, sans-serif;
     user-select: none;
     -ms-user-select: none;
     -moz-user-select: none;
