@@ -16,42 +16,42 @@
     
 @keyframes abi {
     from {
-        transform: translate(-50%, -50%) scale(0);
-        -webkit-transform: translate(-50%, -50%) scale(0);
+        transform: scale(0);
+        -webkit-transform: scale(0);
         }
     to {
-        transform: translate(-50%, -50%) scale(1);
-        -webkit-transform: translate(-50%, -50%) scale(1);
+        transform: scale(1);
+        -webkit-transform: scale(1);
         }
     }
 @-webkit-keyframes abi {
     from {
-        transform: translate(-50%, -50%) scale(0);
-        -webkit-transform: translate(-50%, -50%) scale(0);
+        transform: scale(0);
+        -webkit-transform: scale(0);
         }
     to {
-        transform: translate(-50%, -50%) scale(1);
-        -webkit-transform: translate(-50%, -50%) scale(1);
+        transform: scale(1);
+        -webkit-transform: scale(1);
         }
     }
 @keyframes abo {
     from {
-        transform: translate(-50%, -50%) scale(1);
-        -webkit-transform: translate(-50%, -50%) scale(1);
+        transform: scale(1);
+        -webkit-transform: scale(1);
         }
     to {
-        transform: translate(-50%, -50%) scale(0);
-        -webkit-transform: translate(-50%, -50%) scale(0);
+        transform: scale(0);
+        -webkit-transform: scale(0);
         }
     }
 @-webkit-keyframes abo {
     from {
-        transform: translate(-50%, -50%) scale(1);
-        -webkit-transform: translate(-50%, -50%) scale(1);
+        transform: scale(1);
+        -webkit-transform: scale(1);
         }
     to {
-        transform: translate(-50%, -50%) scale(0);
-        -webkit-transform: translate(-50%, -50%) scale(0);
+        transform: scale(0);
+        -webkit-transform: scale(0);
         }
     }
 @keyframes aoi {
@@ -107,9 +107,10 @@
     position: absolute;
     top: 45%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    -ms-transform: translate(-50%, -50%) scale(0);
-    -webkit-transform: translate(-50%, -50%) scale(0);
+    translate: -50% -50%;
+    transform: scale(0);
+    -ms-transform: scale(0);
+    -webkit-transform: scale(0);
     z-index: 2;
     height: 300px;
     width: 400px;
@@ -151,9 +152,7 @@
     position: absolute;
     top: 40%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
+    translate: -50% -50%;
     text-align: center;
     }
 #overlay {
