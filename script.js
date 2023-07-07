@@ -41,7 +41,7 @@ const setUp = () => {
     for (let i = 0, span = null; i < variables.word.length; i++) {
         span = document.createElement("span");
         span.className = variables.word.at(i);
-        span.innerText = "_";
+        span.innerText = '_';
         elements.wordOutput.appendChild(span);
         }
     }
@@ -135,7 +135,7 @@ const loadImages = () => {
     }
 const colorText = () => {
     /* Colors the text */
-    let text = "";
+    let text = '';
     for (let letter of elements.win.innerText)
         text += "<span>" + letter + "</span>";
     elements.win.innerHTML = text;
