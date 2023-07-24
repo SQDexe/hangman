@@ -1,5 +1,5 @@
 # Hangman game
-A small, browser hangman game in Polish language
+A small, browser hangman game with 25 words in Polish
 
 First bigger project in my life
 
