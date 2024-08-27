@@ -144,9 +144,8 @@
     transition: background-color 0.4s;
     -o-transition: background-color 0.4s;
     -webkit-transition: background-color 0.4s;
+    &:is(:focus, :hover) { background-color: var(--secondary-color); }
     }
-#letter:focus,
-#letter:hover { background-color: var(--secondary-color); }
 #letter-space { margin-top: 40px; }
 #main-contener {
     position: absolute;
@@ -178,9 +177,11 @@
 #win-message,
 #lose-message,
 #end-message { font-size: 40px; }
-#win-message>span:nth-of-type(3n+0) { color: #0000ff; }
-#win-message>span:nth-of-type(3n+1) { color: #ff0000; }
-#win-message>span:nth-of-type(3n+2) { color: #00ff00; }
+#win-message>span {
+    &:nth-of-type(3n+0) { color: #0000ff; }
+    &:nth-of-type(3n+1) { color: #ff0000; }
+    &:nth-of-type(3n+2) { color: #00ff00; }
+    }
 #lose-message, #end-message { color: #808080; }
 .hidden { display: none; }
 .anima-box-in {
@@ -251,11 +252,11 @@ p { text-align: center; }
         border-radius: 10px;
         font-size: 15px;
         }
-    #letter-space { margin-top: 30px; }
+    #letter-space,
+    #word-space { margin-top: 30px; }
     #win-message,
     #lose-message,
     #end-message { font-size: 25px; }
-    #word-space { margin-top: 30px; }
     #word-space>span {
         font-size: 20px;
         font-variant: small-caps;
