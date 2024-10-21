@@ -1,6 +1,6 @@
 'use strict';
 /* Variables for the game */
-const variables = Object.seal({
+const VARIABLES = Object.seal({
     loseValue: 10,
     wordList: ['biedronka','dinozaur','drzewa','jabłko','jaszczurka','kamień','konstantynopolitańczykowianeczka','kosmos','kościół','kot','kwiatek','las','miasto','motyl','niebo','pies','polana','ryba','samochód','sklep','słońce','trawa','ulica','wiatr','woda'],
     word: '',
@@ -11,7 +11,7 @@ const variables = Object.seal({
     animationTime: Number.parseFloat(getComputedStyle(document.querySelector(':root')).getPropertyValue('--animation-time')) * 1000
     });
 /* Quick element access */
-const elements = Object.freeze({
+const ELEMENTS = Object.freeze({
     wordOutput: document.getElementById('word-space'),
     gameWord: document.getElementById('game-word').getElementsByTagName('span')[0],
     letter: document.getElementById('letter'),
@@ -22,65 +22,64 @@ const elements = Object.freeze({
     overlay: document.getElementById('overlay'),
     img: []
     });
-const exit = () =>
-    window.location = 'https://sqdexe.github.io';
-const showImage = imageNumber => {
+function exit() { window.location = 'https://sqdexe.github.io'; }
+function showImage(imageNumber) {
     /* Hides all images and shows current one */
-    for (let img of elements.img)
+    for (let img of ELEMENTS.img)
         img.classList.add('hidden');
-    elements.img[imageNumber].classList.remove('hidden');
+    ELEMENTS.img[imageNumber].classList.remove('hidden');
     }
-const cleanUp = () => {
+function cleanUp() {
     /* Clears variables and elements */
-    variables.positive = 0, variables.negative = 0;
-    variables.usedLetters = [];
+    [VARIABLES.positive, VARIABLES.negative, VARIABLES.usedLetters] = [0, 0, []];
     showImage(0);
-    elements.wordOutput.innerHTML = '';
+    ELEMENTS.wordOutput.innerHTML = '';
     }
-const setUp = () => {
+function setUp() {
     /* Chooses word and preperes elements */
-    variables.word = variables.wordList[Math.floor(Math.random() * variables.wordList.length)].split('');
-    for (let i = 0, span = null; i < variables.word.length; i++) {
+    VARIABLES.word = VARIABLES.wordList[Math.floor(Math.random() * VARIABLES.wordList.length)].split('');
+    for (let i = 0, span = null; i < VARIABLES.word.length; i++) {
         span = document.createElement('span');
-        span.className = variables.word.at(i);
+        span.className = VARIABLES.word.at(i);
         span.innerText = '_';
-        elements.wordOutput.appendChild(span);
+        ELEMENTS.wordOutput.appendChild(span);
         }
     }
-const showElements = styleValue => {
+function showElements(styleValue) {
     /* Shows and hides overlay and info box */
     if (styleValue) {
-        elements.infoBox.classList.remove('hidden');
-        elements.overlay.classList.remove('hidden');
-        elements.infoBox.classList.remove('anima-box-out');
-        elements.infoBox.classList.add('anima-box-in');
-        elements.overlay.classList.remove('anima-overlay-out');
-        elements.overlay.classList.add('anima-overlay-in');
+        ELEMENTS.infoBox.classList.remove('hidden');
+        ELEMENTS.overlay.classList.remove('hidden');
+        ELEMENTS.infoBox.classList.remove('anima-box-out');
+        ELEMENTS.infoBox.classList.add('anima-box-in');
+        ELEMENTS.overlay.classList.remove('anima-overlay-out');
+        ELEMENTS.overlay.classList.add('anima-overlay-in');
         }
     else {
-        elements.infoBox.classList.add('anima-box-out');
-        elements.infoBox.classList.remove('anima-box-in');
-        elements.overlay.classList.add('anima-overlay-out');
-        elements.overlay.classList.remove('anima-overlay-in');
+        ELEMENTS.infoBox.classList.add('anima-box-out');
+        ELEMENTS.infoBox.classList.remove('anima-box-in');
+        ELEMENTS.overlay.classList.add('anima-overlay-out');
+        ELEMENTS.overlay.classList.remove('anima-overlay-in');
         setTimeout(() => {
-            elements.infoBox.classList.add('hidden');
-            elements.overlay.classList.add('hidden');
-            }, variables.animationTime);
+            ELEMENTS.infoBox.classList.add('hidden');
+            ELEMENTS.overlay.classList.add('hidden');
+            }, VARIABLES.animationTime);
         }
     }
-const visStyle = (bool, elem) =>
+function visStyle(bool, elem) {
     bool ?
-        elements[elem].classList.remove('hidden') :
-        elements[elem].classList.add('hidden');
-const showEndMessage = (win, lose, end) => {
+        ELEMENTS[elem].classList.remove('hidden') :
+        ELEMENTS[elem].classList.add('hidden');
+    }
+function showEndMessage(win, lose, end) {
     /* Manages info box */
     visStyle(win, 'win');
     visStyle(lose, 'lose');
     visStyle(end, 'end');
     }
-const endGame = endType => {
+function endGame(endType) {
     /* Ends the game */
-    elements.gameWord.innerText = variables.word.join('');
+    ELEMENTS.gameWord.innerText = VARIABLES.word.join('');
     switch (endType) {
         case 'win' :
             showEndMessage(true, false, false); break;
@@ -92,60 +91,60 @@ const endGame = endType => {
         }
     showElements(true);
     }
-const check = () => {
+function check() {
     /* Gets letter and checks if correct */
-    variables.letterValue = elements.letter.value.toLowerCase();
-    if (variables.letterValue.length == 0 || variables.usedLetters.some(e => e == variables.letterValue))
+    VARIABLES.letterValue = ELEMENTS.letter.value.toLowerCase();
+    if (VARIABLES.letterValue.length == 0 || VARIABLES.usedLetters.some(e => e == VARIABLES.letterValue))
         return;
     
     /* Stacks letter, clears input and tests the letter */
-    variables.usedLetters.push(variables.letterValue);
-    elements.letter.value = '';
+    VARIABLES.usedLetters.push(VARIABLES.letterValue);
+    ELEMENTS.letter.value = '';
     let lengthCheck = 0;
-    for (let i = 0; i < variables.word.length; i++)
-        if (variables.word.at(i) !== variables.letterValue)
+    for (let i = 0; i < VARIABLES.word.length; i++)
+        if (VARIABLES.word.at(i) !== VARIABLES.letterValue)
             lengthCheck++;
 
     /* Negative result */
-    if (lengthCheck == variables.word.length) {
-        variables.negative++;
-        showImage(variables.negative);
-        if (variables.loseValue <= variables.negative)
+    if (lengthCheck == VARIABLES.word.length) {
+        VARIABLES.negative++;
+        showImage(VARIABLES.negative);
+        if (VARIABLES.loseValue <= VARIABLES.negative)
             endGame('lose');
         }
         
     /* Positive result */
     else {
-        let matchingPlaces = document.getElementsByClassName(variables.letterValue);
+        let matchingPlaces = document.getElementsByClassName(VARIABLES.letterValue);
         for (let i = 0; i < matchingPlaces.length; i++) {
-            matchingPlaces[i].textContent = variables.letterValue;
-            variables.positive++;
+            matchingPlaces[i].textContent = VARIABLES.letterValue;
+            VARIABLES.positive++;
             }
-        if (variables.word.length <= variables.positive)
+        if (VARIABLES.word.length <= VARIABLES.positive)
             endGame('win');
         }
     }
-const loadImages = () => {
+function loadImages() {
     /* Loads and prepares images */
     let imageSpace = document.getElementById('picture');
-    for (let i = 0, img = null; i <= variables.loseValue; i++) {
+    for (let i = 0, img = null; i <= VARIABLES.loseValue; i++) {
         img = document.createElement('img');
         imageSpace.appendChild(img);
         img.src = `img/${i}.png`;
         img.alt = `Wisielec ${i} stopień`;
         img.id = `img-${i}`;
         img.classList.add('hidden');
-        elements.img.push(img);
+        ELEMENTS.img.push(img);
         }
     }
-const colorText = () => {
+function colorText() {
     /* Colors the text */
-    const text = [];
-    for (let letter of elements.win.innerText)
-        text.push(`<span>${letter}</span>`);
-    elements.win.innerHTML = text.join('');
+    const TEXT = [];
+    for (let letter of ELEMENTS.win.innerText)
+        TEXT.push(`<span>${letter}</span>`);
+    ELEMENTS.win.innerHTML = TEXT.join('');
     }
-const assignButtons = () => {
+function assignButtons() {
     /* Assigns the buttons */
     document.getElementById('letter').addEventListener('keydown', event => {
         if (event.key === 'Enter')
@@ -162,7 +161,7 @@ const assignButtons = () => {
         });
     document.getElementById('info-box-button-right').addEventListener('click', exit);
     }
-const load = () => {
+function load() {
     loadImages();
     colorText();
     assignButtons();
