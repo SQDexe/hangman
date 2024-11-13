@@ -1,6 +1,6 @@
 'use strict';
 /* Variables for the game */
-const VARIABLES = Object.seal({
+const variables = Object.seal({
     loseValue: 10,
     wordList: ['biedronka','dinozaur','drzewa','jabłko','jaszczurka','kamień','konstantynopolitańczykowianeczka','kosmos','kościół','kot','kwiatek','las','miasto','motyl','niebo','pies','polana','ryba','samochód','sklep','słońce','trawa','ulica','wiatr','woda'],
     word: '',
@@ -11,7 +11,7 @@ const VARIABLES = Object.seal({
     animationTime: Number.parseFloat(getComputedStyle(document.querySelector(':root')).getPropertyValue('--animation-time')) * 1000
     });
 /* Quick element access */
-const ELEMENTS = Object.freeze({
+const elements = Object.freeze({
     wordOutput: document.getElementById('word-space'),
     gameWord: document.getElementById('game-word').getElementsByTagName('span')[0],
     letter: document.getElementById('letter'),
@@ -25,51 +25,51 @@ const ELEMENTS = Object.freeze({
 function exit() { window.location = 'https://sqdexe.github.io'; }
 function showImage(imageNumber) {
     /* Hides all images and shows current one */
-    for (let img of ELEMENTS.img)
+    for (let img of elements.img)
         img.classList.add('hidden');
-    ELEMENTS.img[imageNumber].classList.remove('hidden');
+    elements.img[imageNumber].classList.remove('hidden');
     }
 function cleanUp() {
     /* Clears variables and elements */
-    [VARIABLES.positive, VARIABLES.negative, VARIABLES.usedLetters] = [0, 0, []];
+    [variables.positive, variables.negative, variables.usedLetters] = [0, 0, []];
     showImage(0);
-    ELEMENTS.wordOutput.innerHTML = '';
+    elements.wordOutput.innerHTML = '';
     }
 function setUp() {
     /* Chooses word and preperes elements */
-    VARIABLES.word = VARIABLES.wordList[Math.floor(Math.random() * VARIABLES.wordList.length)].split('');
-    for (let i = 0, span = null; i < VARIABLES.word.length; i++) {
+    variables.word = variables.wordList[Math.floor(Math.random() * variables.wordList.length)].split('');
+    for (let i = 0, span = null; i < variables.word.length; i++) {
         span = document.createElement('span');
-        span.className = VARIABLES.word.at(i);
+        span.className = variables.word.at(i);
         span.innerText = '_';
-        ELEMENTS.wordOutput.appendChild(span);
+        elements.wordOutput.appendChild(span);
         }
     }
 function showElements(styleValue) {
     /* Shows and hides overlay and info box */
     if (styleValue) {
-        ELEMENTS.infoBox.classList.remove('hidden');
-        ELEMENTS.overlay.classList.remove('hidden');
-        ELEMENTS.infoBox.classList.remove('anima-box-out');
-        ELEMENTS.infoBox.classList.add('anima-box-in');
-        ELEMENTS.overlay.classList.remove('anima-overlay-out');
-        ELEMENTS.overlay.classList.add('anima-overlay-in');
+        elements.infoBox.classList.remove('hidden');
+        elements.overlay.classList.remove('hidden');
+        elements.infoBox.classList.remove('anima-box-out');
+        elements.infoBox.classList.add('anima-box-in');
+        elements.overlay.classList.remove('anima-overlay-out');
+        elements.overlay.classList.add('anima-overlay-in');
         }
     else {
-        ELEMENTS.infoBox.classList.add('anima-box-out');
-        ELEMENTS.infoBox.classList.remove('anima-box-in');
-        ELEMENTS.overlay.classList.add('anima-overlay-out');
-        ELEMENTS.overlay.classList.remove('anima-overlay-in');
+        elements.infoBox.classList.add('anima-box-out');
+        elements.infoBox.classList.remove('anima-box-in');
+        elements.overlay.classList.add('anima-overlay-out');
+        elements.overlay.classList.remove('anima-overlay-in');
         setTimeout(() => {
-            ELEMENTS.infoBox.classList.add('hidden');
-            ELEMENTS.overlay.classList.add('hidden');
-            }, VARIABLES.animationTime);
+            elements.infoBox.classList.add('hidden');
+            elements.overlay.classList.add('hidden');
+            }, variables.animationTime);
         }
     }
 function visStyle(bool, elem) {
     bool ?
-        ELEMENTS[elem].classList.remove('hidden') :
-        ELEMENTS[elem].classList.add('hidden');
+        elements[elem].classList.remove('hidden') :
+        elements[elem].classList.add('hidden');
     }
 function showEndMessage(win, lose, end) {
     /* Manages info box */
@@ -79,7 +79,7 @@ function showEndMessage(win, lose, end) {
     }
 function endGame(endType) {
     /* Ends the game */
-    ELEMENTS.gameWord.innerText = VARIABLES.word.join('');
+    elements.gameWord.innerText = variables.word.join('');
     switch (endType) {
         case 'win' :
             showEndMessage(true, false, false); break;
@@ -93,56 +93,56 @@ function endGame(endType) {
     }
 function check() {
     /* Gets letter and checks if correct */
-    VARIABLES.letterValue = ELEMENTS.letter.value.toLowerCase();
-    if (VARIABLES.letterValue.length == 0 || VARIABLES.usedLetters.some(e => e == VARIABLES.letterValue))
+    variables.letterValue = elements.letter.value.toLowerCase();
+    if (variables.letterValue.length == 0 || variables.usedLetters.some(e => e == variables.letterValue))
         return;
     
     /* Stacks letter, clears input and tests the letter */
-    VARIABLES.usedLetters.push(VARIABLES.letterValue);
-    ELEMENTS.letter.value = '';
+    variables.usedLetters.push(variables.letterValue);
+    elements.letter.value = '';
     let lengthCheck = 0;
-    for (let i = 0; i < VARIABLES.word.length; i++)
-        if (VARIABLES.word.at(i) !== VARIABLES.letterValue)
+    for (let i = 0; i < variables.word.length; i++)
+        if (variables.word.at(i) !== variables.letterValue)
             lengthCheck++;
 
     /* Negative result */
-    if (lengthCheck == VARIABLES.word.length) {
-        VARIABLES.negative++;
-        showImage(VARIABLES.negative);
-        if (VARIABLES.loseValue <= VARIABLES.negative)
+    if (lengthCheck == variables.word.length) {
+        variables.negative++;
+        showImage(variables.negative);
+        if (variables.loseValue <= variables.negative)
             endGame('lose');
         }
         
     /* Positive result */
     else {
-        let matchingPlaces = document.getElementsByClassName(VARIABLES.letterValue);
+        let matchingPlaces = document.getElementsByClassName(variables.letterValue);
         for (let i = 0; i < matchingPlaces.length; i++) {
-            matchingPlaces[i].textContent = VARIABLES.letterValue;
-            VARIABLES.positive++;
+            matchingPlaces[i].textContent = variables.letterValue;
+            variables.positive++;
             }
-        if (VARIABLES.word.length <= VARIABLES.positive)
+        if (variables.word.length <= variables.positive)
             endGame('win');
         }
     }
 function loadImages() {
     /* Loads and prepares images */
     let imageSpace = document.getElementById('picture');
-    for (let i = 0, img = null; i <= VARIABLES.loseValue; i++) {
+    for (let i = 0, img = null; i <= variables.loseValue; i++) {
         img = document.createElement('img');
         imageSpace.appendChild(img);
         img.src = `img/${i}.png`;
         img.alt = `Wisielec ${i} stopień`;
         img.id = `img-${i}`;
         img.classList.add('hidden');
-        ELEMENTS.img.push(img);
+        elements.img.push(img);
         }
     }
 function colorText() {
     /* Colors the text */
-    const TEXT = [];
-    for (let letter of ELEMENTS.win.innerText)
-        TEXT.push(`<span>${letter}</span>`);
-    ELEMENTS.win.innerHTML = TEXT.join('');
+    const text = [];
+    for (const letter of elements.win.innerText)
+        text.push(`<span>${letter}</span>`);
+    elements.win.innerHTML = text.join('');
     }
 function assignButtons() {
     /* Assigns the buttons */
